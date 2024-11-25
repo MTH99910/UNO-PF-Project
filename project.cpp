@@ -39,8 +39,8 @@ int main()
 	print(deck);
 	cout<<endl;
 	
-	nigga:
-	
+	loop:
+		
 	dealCards(1, discardPile, deck, deckIndex);
 	dealCards(1, pl1Deck, deck, deckIndex);
 	dealCards(1, pl2Deck, deck, deckIndex);
@@ -48,8 +48,9 @@ int main()
 	printBoard( pl1Deck, pl2Deck, discardPile, playerTurn);
 	
 	getch();
+	playerTurn==1?playerTurn=2:playerTurn==2?playerTurn=0:playerTurn=1;
 	clearScreen();
-	goto nigga;
+	goto loop;
 	
 	return 0;
 }
