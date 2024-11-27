@@ -25,20 +25,19 @@ void clearScreen();
 
 //Player Turn Functions
 void playTurn(int discardPile[108], int pl1Deck[106], int pl2Deck[106], int deck[4][15], int deckIndex[2],int &playerTurn);
-bool isValidPlay(int playerCard, int topCard);
+bool isValidPlay(int &playerCard, int topCard);
 void handleSpecialCard(int specialCardType);
 void ValidateFirstCard(int deck[4][15]);
 void SwitchPlayerTurn(int &playerTurn);
-void WildCardSetColor();
+void WildCardSetColor(int &wildCard);
  
 //Nessecary Global Varaibles
-int playerTurn = 1, deck[4][15]={0}, pl1Deck[106]={0}, pl2Deck[106]={0}, deckIndex[2]={0}, nextColor = -1;
+int playerTurn = 1, deck[4][15]={0}, pl1Deck[106]={0}, pl2Deck[106]={0}, deckIndex[2]={0};
  
 int main()
 {
 	int discardPile[108]={0};
 	
-	printDiscard(discardPile);
 	initializeDeck(deck);
 	shuffleDeck(deck);
 	ValidateFirstCard(deck);
@@ -47,12 +46,11 @@ int main()
 	dealCards(7, pl2Deck, deck, deckIndex);
 	do
 	{
-		clearScreen();
+		print(deck);
 		printBoard(pl1Deck, pl2Deck, discardPile, playerTurn);
 		playTurn(discardPile, pl1Deck, pl2Deck, deck, deckIndex, playerTurn);
 		SwitchPlayerTurn(playerTurn);
 		clearScreen();
-		
 	}while((numOfCards(pl1Deck) - 1) != 0 || (numOfCards(pl2Deck) - 1) != 0);
 	return 0;
 }
@@ -424,6 +422,7 @@ void dealCards(int drawAmm, int player[106], int deck[4][15], int deckIndex[2])
 
 void handleSpecialCard(int specialCardType)
 {
+	
 	int temp = specialCardType;
 	int digit1 = temp/1000;
 	temp = temp - (digit1*1000);
@@ -626,10 +625,10 @@ void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4]
 				{
 					UpdateDiscardPile(pl1Deck[choose], discardPile);
 					handleSpecialCard(discardPile[numOfCards(discardPile) - 1]);
-					RemovePlayerCard(pl1Deck, choose);
+					RemovePlayerCard(pl1Deck, choose); 
 					goto end;
 				}
-				else if(!isValidPlay(pl2Deck[choose], discardPile[numOfCards(discardPile) - 1]))
+				else
 				{
 					cout << "Invalid Move, You Cannot Play That Card Right Now!!" << endl;
 					goto Player1input;
@@ -664,15 +663,15 @@ void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4]
 					RemovePlayerCard(pl2Deck, choose);
 					goto end;
 				}
-				else if(!isValidPlay(pl2Deck[choose], discardPile[numOfCards(discardPile) - 1]))
+				else
 				{
 					cout << "Invalid Move, You Cannot Play That Card Right Now!!" << endl;
 					goto Player2input;
 				}
 			}
 		}
-		end:;
 	}
+	end:;
 }
 
 void RemovePlayerCard(int playerDeck[106],int index)
@@ -696,7 +695,7 @@ void UpdateDiscardPile(int playedCard, int discardPile[108])
 	discardPile[index] = playedCard;
 }
 
-bool isValidPlay(int playerCard, int topCard)
+bool isValidPlay(int &playerCard, int topCard)
 {
 	int playerCardRefNumber = playerCard, topCardRefNumber = topCard;
 	int d1 = 0, d2 = 0;
@@ -706,28 +705,15 @@ bool isValidPlay(int playerCard, int topCard)
 	n1 = topCard/1000;
 	
 	playerCardRefNumber = playerCardRefNumber - (d1*1000);
-	d2 = playerCardRefNumber/10;;
+	d2 = playerCardRefNumber/10;
 	
 	topCardRefNumber = topCardRefNumber - (n1*1000);
 	n2 = topCardRefNumber/10;
 	
-	getch();
-	
 	if(d2 == 13 || d2 == 14)
 	{
-		WildCardSetColor();
+		WildCardSetColor(playerCard);
 		return true;
-	}
-	else if(n2 == 13 || n2 == 14)
-	{
-		if(d1 == nextColor)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 	else
 	{
@@ -742,8 +728,12 @@ bool isValidPlay(int playerCard, int topCard)
 	}
 }
 
-void WildCardSetColor()
+void WildCardSetColor(int &playerCard)
 {
+	int tempNum = playerCard;
+	int d1 = 0;
+	d1 = tempNum/1000;
+	playerCard = playerCard - d1*1000;
 	char choice = '0';
 	colorInput:
 	cout << "Which Color Should The Next Card Be?" << endl;
@@ -754,22 +744,26 @@ void WildCardSetColor()
 	{
 		case '1':
 			{
-				nextColor = 1;
+				playerCard = playerCard + 1000;
+				cout << playerCard << endl;
 				break;
 			}
 		case '2':
 			{
-				nextColor = 2;
+				playerCard = playerCard + 2000;
+				cout << playerCard << endl;
 				break;
 			}
 		case '3':
 			{
-				nextColor = 6;
+				playerCard = playerCard + 6000;
+				cout << playerCard << endl;
 				break;
 			}
 		case '4':
 			{
-				nextColor = 4;
+				playerCard = playerCard + 4000;
+				cout << playerCard << endl;
 				break;
 			}
 		default:
