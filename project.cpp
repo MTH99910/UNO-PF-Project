@@ -180,7 +180,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(201)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(187);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(201)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(187);
 	setColor(0, 7);
 	cout<<endl;
 	if(cardType==13||cardType==14)
@@ -191,7 +191,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
 	setColor(0, 7);
 	if(cardType==13||cardType==14)
 	{
@@ -209,7 +209,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
 	setColor(0, 7);
 	cout<<endl;
 	if(cardType==13||cardType==14)
@@ -220,7 +220,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(186);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186);
 	if(cardType<=9)
 	{
 		cout<<"   "<<cardType<<"   ";
@@ -257,7 +257,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
 	setColor(0, 7);
 	cout<<endl;
 	if(cardType==13||cardType==14)
@@ -268,7 +268,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
 	setColor(0, 7);
 	cout<<endl;
 	if(cardType==13||cardType==14)
@@ -279,7 +279,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(200)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(188);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(200)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(188);
 	setColor(0, 7);
 	cout<<endl;
 	
