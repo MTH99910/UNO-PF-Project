@@ -47,6 +47,13 @@ int main()
 	
 	printBoard( pl1Deck, pl2Deck, discardPile, playerTurn);
 	
+	print (pl1Deck);
+	cout<<endl;
+	print (pl2Deck);
+	cout<<endl;
+	print(deck);
+	cout<<endl;
+	
 	getch();
 	playerTurn==1?playerTurn=2:playerTurn==2?playerTurn=0:playerTurn=1;
 	clearScreen();
@@ -294,7 +301,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 					}
 					else
 					{
-						setColor( pl1Deck[l+k]/1000 );
+						setColor( pl2Deck[l+k]/1000 );
 					}
 				}
 				switch (j)
