@@ -46,7 +46,6 @@ int main()
 	dealCards(7, pl2Deck, deck, deckIndex);
 	do
 	{
-		print(deck);
 		printBoard(pl1Deck, pl2Deck, discardPile, playerTurn);
 		playTurn(discardPile, pl1Deck, pl2Deck, deck, deckIndex, playerTurn);
 		SwitchPlayerTurn(playerTurn);
@@ -77,12 +76,12 @@ void initializeDeck(int deck[4][15])
 void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int playerTurn)
 {
 	int numOfCardsPl1=numOfCards(pl1Deck), numOfCardsPl2=numOfCards(pl2Deck), l=0;
-	for(int i=(numOfCardsPl1/10)+(numOfCardsPl1%10==0?0:1) ; i>=1 ; i-- )
+	for(int i=(numOfCardsPl1/15)+(numOfCardsPl1%15==0?0:1) ; i>=1 ; i-- )
 	{
 		int k;
 		for(int j=1 ; j<=8 ; j++)
 		{
-			for( k=0 ; k<(i>1?10:numOfCardsPl1-l) ; k++)
+			for( k=0 ; k<(i>1?15:numOfCardsPl1-l) ; k++)
 			{
 				cout<<"  ";
 				int cardType=(pl1Deck[l+k]/10)%100;
@@ -178,7 +177,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(201)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(187);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(201)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(187);
 	setColor(0, 7);
 	cout<<endl;
 	if(cardType==13||cardType==14)
@@ -189,7 +188,25 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
+	setColor(0, 7);
+	if(cardType==13||cardType==14)
+	{
+		cout<<"\t";
+		setColor(discardPile[numOfCards(discardPile)-1]/1000);
+		cout<<" ";
+		setColor(0, 7);
+	}
+	cout<<endl;
+	if(cardType==13||cardType==14)
+	{
+		setColor(7);
+	}
+	else
+	{
+		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
+	}
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
 	setColor(0, 7);
 	cout<<endl;
 	if(cardType==13||cardType==14)
@@ -200,18 +217,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
-	setColor(0, 7);
-	cout<<endl;
-	if(cardType==13||cardType==14)
-	{
-		setColor(7);
-	}
-	else
-	{
-		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
-	}
-	cout <<"\t\t\t\t\t\t"<<char(186);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186);
 	if(cardType<=9)
 	{
 		cout<<"   "<<cardType<<"   ";
@@ -248,7 +254,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
 	setColor(0, 7);
 	cout<<endl;
 	if(cardType==13||cardType==14)
@@ -259,7 +265,7 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(186)<< "       " <<char(186);
 	setColor(0, 7);
 	cout<<endl;
 	if(cardType==13||cardType==14)
@@ -270,19 +276,19 @@ void printBoard(int pl1Deck[106],int  pl2Deck[106],int  discardPile[108], int pl
 	{
 		setColor( discardPile[numOfCards(discardPile)-1]/1000 );
 	}
-	cout <<"\t\t\t\t\t\t"<<char(200)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(188);
+	cout <<"\t\t\t\t\t\t\t\t\t"<<char(200)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(205)<<char(188);
 	setColor(0, 7);
 	cout<<endl;
 	
 	cout<<"\n\n\n";
 	
 	l=0;
-	for(int i=(numOfCardsPl2/10)+(numOfCardsPl2%10==0?0:1) ; i>=1 ; i-- )
+	for(int i=(numOfCardsPl2/15)+(numOfCardsPl2%15==0?0:1) ; i>=1 ; i-- )
 	{
 		int k;
 		for(int j=1 ; j<=8 ; j++)
 		{
-			for( k=0 ; k<(i>1?10:numOfCardsPl2-l) ; k++)
+			for( k=0 ; k<(i>1?15:numOfCardsPl2-l) ; k++)
 			{
 				cout<<"  ";
 				int cardType=(pl2Deck[l+k]/10)%100;
