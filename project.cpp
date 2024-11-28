@@ -24,12 +24,13 @@ void printDiscard(int discardPile[108]);
 void clearScreen();
 
 //Player Turn Functions
-void playTurn(int discardPile[108], int pl1Deck[106], int pl2Deck[106], int deck[4][15], int deckIndex[2],int &playerTurn);
+void playTurn(int discardPile[108], int pl1Deck[106], int pl2Deck[106], int deck[4][15], int deckIndex[2],int &playerTurn, bool &unoPl1, bool &unoPl2);
 bool isValidPlay(int &playerCard, int topCard);
 void handleSpecialCard(int specialCardType);
 void ValidateFirstCard(int deck[4][15]);
 void SwitchPlayerTurn(int &playerTurn);
 void WildCardSetColor(int &wildCard);
+bool callUno(bool &unoPl1, bool &unoPl2);
  
 //Nessecary Global Varaibles
 int playerTurn = 1, deck[4][15]={0}, pl1Deck[106]={0}, pl2Deck[106]={0}, deckIndex[2]={0};
@@ -37,6 +38,7 @@ int playerTurn = 1, deck[4][15]={0}, pl1Deck[106]={0}, pl2Deck[106]={0}, deckInd
 int main()
 {
 	int discardPile[108]={0};
+	bool unoPl1 = false, unoPl2 = false;
 	
 	initializeDeck(deck);
 	shuffleDeck(deck);
@@ -47,10 +49,10 @@ int main()
 	do
 	{
 		printBoard(pl1Deck, pl2Deck, discardPile, playerTurn);
-		playTurn(discardPile, pl1Deck, pl2Deck, deck, deckIndex, playerTurn);
+		playTurn(discardPile, pl1Deck, pl2Deck, deck, deckIndex, playerTurn, unoPl1, unoPl2);
 		SwitchPlayerTurn(playerTurn);
 		clearScreen();
-	}while((numOfCards(pl1Deck) - 1) != 0 || (numOfCards(pl2Deck) - 1) != 0);
+	}while(numOfCards(pl1Deck) != 0 || numOfCards(pl2Deck) != 0);
 	return 0;
 }
 
@@ -555,7 +557,6 @@ void ValidateFirstCard(int deck[4][15])
 		if(secondDigit == 10 || secondDigit == 11 || secondDigit == 12 || secondDigit == 13 || secondDigit == 14)
 		{
 			temp = deck[0][0];
-			cout << temp;
 			for(int i = 0; i < 4; i++)
 			{
 				for(int j = 0; j < 15; j++)
@@ -568,16 +569,14 @@ void ValidateFirstCard(int deck[4][15])
 					{
 						deck[i][j] = deck[i][j + 1];	
 					}
-					cout << deck[i][j] << " ";
 				}
-				cout << endl;
 			}
 			deck[3][14] = temp;
 		}
 	}while(secondDigit == 10 || secondDigit == 11 || secondDigit == 12 || secondDigit == 13 || secondDigit == 14);
 }
 
-void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4][15], int deckIndex[2],int &playerTurn)
+void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4][15], int deckIndex[2],int &playerTurn, bool &unoPl1, bool &unoPl2)
 {	
 	char choice;
 	int choose;
@@ -587,39 +586,101 @@ void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4]
 		{
 			case 1:
 				{
+					player1ChoiceInput:
 					cout << "Player 1" << endl;
+					cout << "Player 1 UNO: " << unoPl1 << " Player 2 UNO: " << unoPl2 << endl; 
+					cout << "What do you want to do?" << endl;
+					cout << "1. Draw Card" << endl;
+					cout << "2. Play Card" << endl;
+					if(numOfCards(pl1Deck) == 2 && unoPl1 == false)
+					{
+						cout << "3. Call Uno" << endl;
+						cout << "Choice: ";
+						cin >> choice;
+					}
+					else if(numOfCards(pl2Deck) <= 1 && unoPl2 == false)
+					{
+						cout << "4. Catch Uno" << endl;
+						cout << "Choice: ";
+						cin >> choice; 
+					}
+					else
+					{
+						cout << "Choice: ";
+						cin >> choice;
+						if((choice != '1' && choice != '2') || choice == '3' || choice == '4')
+						{
+							cout << "Invalid Choice! Please Try Again" << endl;
+							goto player1ChoiceInput;
+						}
+					}
 					break;
 				}
 			case 2:
 				{
+					player2ChoiceInput:
 					cout << "Player 2" << endl;
+					cout << "Player 1 UNO: " << unoPl1 << " Player 2 UNO: " << unoPl2 << endl; 
+					cout << "What do you want to do?" << endl;
+					cout << "1. Draw Card" << endl;
+					cout << "2. Play Card" << endl;
+					if(numOfCards(pl2Deck) == 2 && unoPl2 == false)
+					{
+						cout << "3. Call Uno" << endl;
+						cout << "Choice: ";
+						cin >> choice;
+					}
+					else if(numOfCards(pl1Deck) <= 1 && unoPl1 == false)
+					{
+						cout << "4. Catch Uno" << endl;
+						cout << "Choice: ";
+						cin >> choice; 
+					}
+					else
+					{
+						cout << "Choice: ";
+						cin >> choice;
+						if((choice != '1' && choice != '2') || choice == '3')
+						{
+							cout << "Invalid Choice! Please Try Again" << endl;
+							goto player2ChoiceInput;
+						}
+					}
 					break;
-				}
+				}	
 		}
-		cout << "What do you want to do?" << endl;
-		cout << "1. Draw Card" << endl;
-		cout << "2. Play Card" << endl;
-		cout << "Choice: ";
-		cin >> choice;
-		if(choice != '1' && choice != '2')
-		{
-			cout << "Invalid Choice! Please Try Again" << endl;
-		}
-	}while(choice != '1' && choice != '2');
+	}while(choice != '1' && choice != '2' && choice != '3' && choice != '4');
 	
 	if(playerTurn == 1)
 	{
+		if(choice == '3')
+		{
+			callUno(unoPl1, unoPl2);
+			goto player1ChoiceInput;
+		}
+		if(choice == '4')
+		{
+			dealCards(2, pl2Deck, deck, deckIndex);
+			goto player1ChoiceInput;
+		}
 		if(choice == '1')
 		{
 			dealCards(1, pl1Deck, deck, deckIndex);
+			unoPl1 = false;
 		}
 		else if(choice == '2')
 		{
 			Player1input:
 			cout << "Which card do you want to put down?" << endl;
-			cout << "Choose from 1 to " << numOfCards(pl1Deck) << " from your deck " << endl;
+			cout << "Choose from 1 to " << numOfCards(pl1Deck) << " from your deck  or input 0 to draw a card" << endl;
 			cin >> choose;
-			if(choose > numOfCards(pl1Deck) || choose < 1)
+			if(choose == 0)
+			{
+				dealCards(1, pl1Deck, deck, deckIndex);
+				unoPl1 = false;
+				goto endofTurn;
+			}
+			else if(choose > numOfCards(pl1Deck) || choose < 1)
 			{
 				cout << "Invalid Choice! Please Try Again" << endl;
 				goto Player1input;
@@ -632,7 +693,7 @@ void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4]
 					UpdateDiscardPile(pl1Deck[choose], discardPile);
 					handleSpecialCard(discardPile[numOfCards(discardPile) - 1]);
 					RemovePlayerCard(pl1Deck, choose); 
-					goto end;
+					goto endofTurn;
 				}
 				else
 				{
@@ -640,13 +701,25 @@ void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4]
 					goto Player1input;
 				}
 			}
+			unoPl1 = false;
 		}
 	}
 	if(playerTurn == 2)
 	{
+		if(choice == '3')
+		{
+			callUno(unoPl1, unoPl2);
+			goto player2ChoiceInput;
+		}
+		if(choice == '4')
+		{
+			dealCards(2, pl1Deck, deck, deckIndex);
+			goto player2ChoiceInput;
+		}
 		if(choice == '1')
 		{
 			dealCards(1, pl2Deck, deck, deckIndex);
+			unoPl2 = false;
 		}
 		else if(choice == '2')
 		{
@@ -654,7 +727,13 @@ void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4]
 			cout << "Which card do you want to put down?" << endl;
 			cout << "Choose from 1 to " << numOfCards(pl2Deck) << " from your deck " << endl;
 			cin >> choose;
-			if(choose > numOfCards(pl2Deck) || choose < 1)
+			if(choose == 0)
+			{
+				dealCards(1, pl2Deck, deck, deckIndex);
+				unoPl2 = false;
+				goto endofTurn;
+			}
+			else if(choose > numOfCards(pl2Deck) || choose < 1)
 			{
 				cout << "Invalid Choice! Please Try Again" << endl;
 				goto Player2input;
@@ -667,7 +746,7 @@ void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4]
 					UpdateDiscardPile(pl2Deck[choose], discardPile);
 					handleSpecialCard(discardPile[numOfCards(discardPile) - 1]);
 					RemovePlayerCard(pl2Deck, choose);
-					goto end;
+					goto endofTurn;
 				}
 				else
 				{
@@ -675,9 +754,11 @@ void playTurn(int discardPile[108],int pl1Deck[106],int pl2Deck[106],int deck[4]
 					goto Player2input;
 				}
 			}
+			unoPl2 = false;
 		}
 	}
-	end:;
+	endofTurn:
+	return;
 }
 
 void RemovePlayerCard(int playerDeck[106],int index)
@@ -779,4 +860,19 @@ void WildCardSetColor(int &playerCard)
 				break;
 			}
 	}
+}
+
+bool callUno(bool &unoPl1, bool &unoPl2)
+{
+	if(playerTurn == 1 && unoPl1 == false)
+	{
+		unoPl1 = true;
+		return unoPl1;
+	}
+	if(playerTurn == 2 && unoPl2 == false)
+	{
+		unoPl2 = true;
+		return unoPl2;
+	}
+	return false;
 }
