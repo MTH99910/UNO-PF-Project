@@ -41,56 +41,56 @@ int playerTurn = 1, deck[4][15]={0}, pl1Deck[106]={0}, pl2Deck[106]={0}, deckInd
  
 int main()
 {
-//	char choice = '0';
-//	menuInput:
-//	cout << "========== Welcome to UNO ==========="<< endl;
-//	cout << "1. Play" << endl;
-//	cout << "2. Load Score" << endl;
-//	cout << "3. Exit" << endl;
-//	cout << "Choice: ";
-//	cin >> choice;
-//	switch(choice)
-//	{
-//		case '1':
-//			{
-//				StartGame();
-//				break;
-//			}
-//		case '2':
-//			{
-//				return 0;
-//				break;
-//			}
-//		case '3':
-//			{
-//				return 0;
-//				break;
-//			}
-//		case 'E':
-//			{
-//				return 0;
-//				break;
-//			}
-//		default:
-//			{
-//				cout << "Invalid Input! Please Choose One Of The Menu Options" << endl;
-//				goto menuInput;
-//			}
-//	}
-	
-	int discardPile[108]={0, 0, };
-	initializeDeck(deck);
-	char c = '0';
-	do
+	char choice = '0';
+	menuInput:
+	cout << "========== Welcome to UNO ==========="<< endl;
+	cout << "1. Play" << endl;
+	cout << "2. Load Score" << endl;
+	cout << "3. Exit" << endl;
+	cout << "Choice: ";
+	cin >> choice;
+	switch(choice)
 	{
-		print(deck);
-		print(discardPile);
-		dealCards(1, discardPile, deck, deckIndex);
-		cin >> c;
-	}while(c != 'A');
-
-	RecycleDeck(discardPile, deck);
-	print(deck);
+		case '1':
+			{
+				StartGame();
+				break;
+			}
+		case '2':
+			{
+				return 0;
+				break;
+			}
+		case '3':
+			{
+				return 0;
+				break;
+			}
+		case 'E':
+			{
+				return 0;
+				break;
+			}
+		default:
+			{
+				cout << "Invalid Input! Please Choose One Of The Menu Options" << endl;
+				goto menuInput;
+			}
+	}
+	
+//	int discardPile[108]={0, 0, };
+//	initializeDeck(deck);
+//	char c = '0';
+//	do
+//	{
+//		print(deck);
+//		print(discardPile);
+//		dealCards(1, discardPile, deck, deckIndex);
+//		cin >> c;
+//	}while(c != 'A');
+//
+//	RecycleDeck(discardPile, deck);
+//	print(deck);
 	return 0;
 }
 
