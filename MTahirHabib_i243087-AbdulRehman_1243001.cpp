@@ -26,6 +26,7 @@ void RecycleDeck(int discardPile[108], int deck[4][15], int &drawAmm);
 void printBoard(int pl1Deck[106],int pl2Deck[106],int discardPile[108], int playerTurn);
 void setColor(int bgColor, int textColor=0);
 void clearScreen();
+void test();
 
 //Player Turn Functions
 void playTurn(int discardPile[108], int pl1Deck[106], int pl2Deck[106], int deck[4][15], int deckIndex[2],int &playerTurn, bool &unoPl1, bool &unoPl2, char &exitChar, bool &cardDrawn);
@@ -43,7 +44,6 @@ int playerTurn = 1, deck[4][15]={0}, pl1Deck[106]={0}, pl2Deck[106]={0}, deckInd
 int main()
 {
 	//CREATING OPENING and READING FILE
-	fstream MyFile("saveFile.txt");
 	int pl1Won=0, pl2Won=0;
 	saveLoadGameResult( pl1Won, pl2Won);
 	char choice = '0';
@@ -58,14 +58,15 @@ int main()
 			cout << "1. Play" << endl;
 			cout << "2. Load Score" << endl;
 			cout << "3. Exit" << endl;
+			cout << "4. test" << endl;
 			cout << "Choice: ";
 			cin >> choice;
 		
-			if(choice != '1' && choice != '2' && choice != '3' && choice != 'E')
+			if(choice != '1' && choice != '2' && choice != '3' && choice != 'E' && choice != '4')
 			{
 				cout << "Invalid Input! Please Choose One Of The Menu Options" << endl;
 			}
-		}while(choice != '1' && choice != '2' && choice != '3' && choice != 'E');
+		}while(choice != '1' && choice != '2' && choice != '3' && choice != 'E' && choice != '4');
 		//MENU OPERATIONS
 		switch(choice)
 		{
@@ -77,13 +78,21 @@ int main()
 			case '2':
 				{
 					saveLoadGameResult( pl1Won, pl2Won, false);
-					getch();
 					cout<<"enter any character to return";
+					getch();
 					break;
 				}
 			case '3':
 				{
 					return 0;
+					break;
+				}
+			case '4':
+				{
+					//only for the ruberick test cases
+					test();
+					cout<<"enter any character to return";
+					getch();
 					break;
 				}
 			case 'E':
@@ -1486,7 +1495,7 @@ void saveLoadGameResult(int &pl1Won,int &pl2Won)
 		}
 		
     }
-
+	SaveFile.close();
 }
 
 void saveLoadGameResult(int &pl1Won,int &pl2Won, bool saveOrLoad)
@@ -1501,15 +1510,14 @@ void saveLoadGameResult(int &pl1Won,int &pl2Won, bool saveOrLoad)
 	else
 	{
 		string line;
-		
 		ifstream SaveFile("saveFile.txt");
-		
 		if (!SaveFile)
 		{
-	    	cout << "Unable to open file";
-	    	return;
+			cout << "No save data found so file created \n";
+			ofstream SaveFile("saveFile.txt");
+			SaveFile << "Number of games Player one won:"<<setw(3)<<pl1Won<<"\nNumber of games Player two won:"<<setw(3)<<pl2Won<<"\n";
+			SaveFile.close();
 	    }
-		
 		while (getline (SaveFile, line)) 
 		{
 		  cout << line << endl;
@@ -1517,3 +1525,36 @@ void saveLoadGameResult(int &pl1Won,int &pl2Won, bool saveOrLoad)
 	}
 }
 
+void test()
+{
+	initializeDeck(deck);
+	//shuffleDeck(deck);
+	
+	int test[60]={0};
+	int index=0;
+	cout<<endl<<"special cards, one of all color: "<<endl;
+	for(int i=0 ; i<4 ; i++)
+	{
+		for(int j=0 ; j<15 ; j++)
+		{
+			if((deck[i][j]/10)%100>=10 && (deck[i][j]/10)%100<=14)
+			{
+				cout<<deck[i][j]<<" ";
+			}
+		}
+		cout<<endl;
+	}
+	cout<<endl<<"number cards, one of all color: "<<endl;
+	for(int i=0 ; i<4 ; i++)
+	{
+		for(int j=0 ; j<15 ; j++)
+		{
+			if((deck[i][j]/10)%100>=0 && (deck[i][j]/10)%100<=9)
+			{
+				cout<<deck[i][j]<<" ";
+			}
+		}
+		cout<<endl;
+	}
+	
+}
